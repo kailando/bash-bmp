@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+#
+# Emits a very simple BMP file to stdout
+#
+# Author: Dave Eddy <dave@daveeddy.com>
+# Date: July 29, 2025
+# License: MIT
+
+. ./lib/bmp || exit
+
+main() {
+	local width=2
+	local height=2
+
+	bmp-header "$width" "$height"
+	local padding=$REPLY
+
+	# bottom row
+	bmp-rgb 0 0 0
+	bmp-rgb 255 255 255
+	bmp-pad "$padding"
+
+	# top row
+	bmp-rgb 255 0 0
+	bmp-rgb 0 255 0
+	bmp-pad "$padding"
+}
+
+main "$@"
