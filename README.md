@@ -8,11 +8,21 @@ Generate Bitmap data in pure bash.
 Usage
 -----
 
-```
-./simple-bmp > out.bmp
-./gradient -h 200 -v 200 -o out.bmp
-cat smile.txt | ./sprite-to-bmp -p palette.txt -o out.bmp
-```
+Simple BMP (2x2 pixels)
+
+    ./simple-bmp > out.bmp
+
+![simple-bmp](https://files.daveeddy.com/ysap/bmp/simple.png)
+
+Color Gradient
+
+    ./gradient -h 200 -v 200 -o out.bmp
+
+![gradient](https://files.daveeddy.com/ysap/bmp/gradient.png)
+
+    cat smile.txt | ./sprite-to-bmp -p palette.txt -o out.bmp
+
+![smile](https://files.daveeddy.com/ysap/bmp/smile.png)
 
 License
 -------
