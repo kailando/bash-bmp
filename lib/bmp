@@ -1,4 +1,10 @@
 #!/usr/bin/env bash
+#
+# Library for generating a BMP image in bash
+#
+# Author: Dave Eddy <dave@daveeddy.com>
+# Date: July 30, 2025
+# License: MIT
 
 u32le() {
 	local n=$1 out
@@ -52,7 +58,7 @@ bmp-rgb() {
 }
 
 bmp-pad() {
-	local padding=$1
+	local padding=$1 i
 	for ((i = 0; i < padding; i++)); do
 		printf '\0'
 	done
