@@ -12,6 +12,11 @@ debug() {
 	echo '[debug]' "$@" >&2
 }
 
+fatal() {
+	echo '[fatal]' "$@" >&2
+	exit 1
+}
+
 make-bmp() {
 	local width=$1
 	local height=$2
@@ -42,10 +47,13 @@ main() {
 			w) width=$OPTARG;;
 			h) height=$OPTARG;;
 			o) output=$OPTARG;;
+			*) fatal 'bad option';;
 		esac
 	done
 
-	make-bmp "$width" "$height" > "$output" || exit
+	make-bmp "$width" "$height" > "$output" || \
+	    fatal "failed to generate $output"
+
 	echo "generated ${width}x$height image: $output"
 }
 

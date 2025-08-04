@@ -11,8 +11,24 @@
 
 declare -A PALETTE
 
+read -d '' -r USAGE <<- EOF
+Usage: sprite-to-bmp -p <palette> [-o out.bmp]
+
+Convert sprite data from txt (read as stdin) to a BMP image
+
+Options
+  -h            Print this message and exit.
+  -p <palette>  [required] Palette text file to read.
+  -o <out>      Output file path, defaults to out.bmp.
+EOF
+
 debug() {
 	echo '[debug]' "$@" >&2
+}
+
+fatal() {
+	echo '[fatal]' "$@" >&2
+	exit 1
 }
 
 make-bmp() {
@@ -53,7 +69,7 @@ load-palette() {
 	local file=$1
 
 	local lines
-	mapfile -t lines < "$file" || exit
+	mapfile -t lines < "$file" || fatal "failed to read $file"
 
 	local line
 	for line in "${lines[@]}"; do
@@ -65,28 +81,28 @@ load-palette() {
 	done
 }
 
-fail() {
-    local message="$1"
-    echo "$message" >&2
-    exit 1
-}
-
 main() {
 	local output=out.bmp
 
 	local palette
 	local OPTIND OPTARG opt
-	while getopts 'p:o:' opt; do
+	while getopts 'hp:o:' opt; do
 		case "$opt" in
+			h) echo "$USAGE"; exit 0;;
 			o) output=$OPTARG;;
 			p) palette=$OPTARG;;
+			*) echo "$USAGE" >&2; exit 1;;
 		esac
 	done
 
-	[[ -n $palette ]] || fail "Must provide color palette file with the '-p PALETTE' option."
+	if [[ -z $palette ]]; then
+		usage >&2
+		exit 1
+	fi
+
 	load-palette "$palette"
 
-	make-bmp > "$output" || exit
+	make-bmp > "$output" || fatal "failed to generate $output"
 	echo "generated image: $output"
 }
 
