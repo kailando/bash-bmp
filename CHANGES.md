@@ -3,6 +3,8 @@ Changelog
 
 ## Not Yet Released
 
+- https://github.com/bahamas10/bash-bmp/pull/5 - fix off-by-one with debug
+  messaging
 - https://github.com/bahamas10/bash-bmp/pull/2 - better error checking with
   palette option
 - https://github.com/bahamas10/bash-bmp/pull/1 - remove extra `local` keywords
