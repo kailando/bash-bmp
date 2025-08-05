@@ -3,7 +3,7 @@ bash-bmp
 
 Generate Bitmap data in pure bash.
 
-<!--TODO: Watch how it was made on [YouTube](..url..).-->
+Watch how it was made on [YouTube](https://www.youtube.com/watch?v=XjAIhULJsjc).
 
 Usage
 -----
@@ -29,12 +29,9 @@ License
 
 - MIT License
 
-<!--
 YouTube
 -------
 
-<a href="https://www.youtube.com/watch?v=L967hYylZuc"><img alt="Bash Webserver YouTube
-Thumbnail" src="https://files.daveeddy.com/ysap/bash-webserver-thumbnail.jpg"
+<a href="https://www.youtube.com/watch?v=XjAIhULJsjc"><img alt="Bash BMP YouTube
+Thumbnail" src="https://files.daveeddy.com/ysap/bmp/bash-bmp-thumbnail.jpg"
 /></a>
-
--->
