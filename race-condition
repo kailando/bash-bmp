@@ -1,0 +1,69 @@
+#!/usr/bin/env bash
+#
+# Emits a race-conditioned gradient BMP image
+#
+# Author: Dave Eddy <dave@daveeddy.com>
+# Date: September 17, 2025
+# License: MIT
+
+. ./lib/bmp || exit
+
+debug() {
+	echo '[debug]' "$@" >&2
+}
+
+fatal() {
+	echo '[fatal]' "$@" >&2
+	exit 1
+}
+
+make-bmp-row() {
+	local width=$1
+	local height=$2
+	local y=$3
+	local g=0
+	local x r b
+	for ((x = 0; x < height; x++)); do
+		((r = x * 255 / width))
+		((b = y * 255 / height))
+		bmp-rgb "$r" "$g" "$b"
+	done
+	debug "handled row $((y + 1))/$height"
+	bmp-pad "$padding"
+}
+
+make-bmp() {
+	local width=$1
+	local height=$2
+
+	bmp-header "$width" "$height"
+	local padding=$REPLY
+
+	local r g b y x
+	for ((y = 0; y < height; y++)); do
+		make-bmp-row "$width" "$height" "$y" &
+	done
+}
+
+main() {
+	local width=400
+	local height=400
+	local output=out.bmp
+
+	local OPTIND OPTARG opt
+	while getopts 'w:h:o:' opt; do
+		case "$opt" in
+			w) width=$OPTARG;;
+			h) height=$OPTARG;;
+			o) output=$OPTARG;;
+			*) fatal 'bad option';;
+		esac
+	done
+
+	make-bmp "$width" "$height" > "$output" || \
+	    fatal "failed to generate $output"
+
+	echo "generated ${width}x$height image: $output"
+}
+
+main "$@"
