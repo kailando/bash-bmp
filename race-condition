@@ -43,6 +43,7 @@ make-bmp() {
 	for ((y = 0; y < height; y++)); do
 		make-bmp-row "$width" "$height" "$y" &
 	done
+	wait
 }
 
 main() {
